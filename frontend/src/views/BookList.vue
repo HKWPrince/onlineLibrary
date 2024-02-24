@@ -5,7 +5,7 @@
       <aside class="col-md-2 sidebar bg-dark">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <router-link to="/loans" class="nav-link text-white">Loans</router-link>
+            <router-link to="/loans" class="nav-link text-white">BookSelf</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/books" class="nav-link text-white">Books</router-link>
