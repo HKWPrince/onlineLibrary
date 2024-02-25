@@ -4,10 +4,10 @@
       <h1 class="title">Library</h1>
       <form @submit.prevent="login" class="login-form">
         <div class="input-field">
-          <input type="email" placeholder="Email" required>
+          <input type="tel" v-model="loginForm.phoneNumber" placeholder="Phone Number" required>
         </div>
         <div class="input-field">
-          <input type="password" placeholder="Password" required>
+          <input type="password" v-model="loginForm.password" placeholder="Password" required>
         </div>
         <button type="submit" class="submit-btn">Sign in</button>
         <p class="signup-text">Don't have an account? <a href="/register">Sign up.</a></p>
@@ -17,15 +17,42 @@
 </template>
 
 <script>
+// 匯入用於傳送請求的工具，這裡假設您有一個 request.js 來處理 HTTP 請求
+import request from "@/utils/request";
+import Cookies from "js-cookie"; // 假設您使用 js-cookie 來處理 cookie
+
 export default {
+  data() {
+    return {
+      loginForm: {
+        phoneNumber: '',
+        password: ''
+      },
+    };
+  },
   methods: {
     login() {
-      // 登入邏輯
-      alert('登入功能尚未實現');
+      // 使用 request 工具傳送登入請求
+      request.post('/admin/login', this.loginForm).then(response => {
+        const { data } = response;
+        if (data.code === '200') {
+          this.$notify.success("Login successful");
+          //儲存登入狀態，例如使用 cookie
+          Cookies.set('user', JSON.stringify(data.data));
+          this.$router.push('/'); // 登入成功後重定向到主頁
+        } else {
+          this.$notify.error(data.msg); // 顯示錯誤訊息
+        }
+      }).catch(error => {
+        console.error("Login error:", error);
+        this.$notify.error("Login failed");
+      });
     }
   }
 };
 </script>
+
+
 
 <style scoped>
 .login-container {
