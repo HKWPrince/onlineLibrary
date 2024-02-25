@@ -25,8 +25,8 @@ export default {
   data() {
     return {
       loginForm: {
-        phoneNumber: '',
-        password: ''
+        phoneNumber: [{required: true, message: 'Please enter the phone number!', trigger: 'blur'}],
+        password: [{required: true, message: 'Please enter the password', trigger: 'blur'}]
       },
     };
   },
