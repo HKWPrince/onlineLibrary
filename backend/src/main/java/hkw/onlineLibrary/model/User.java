@@ -1,6 +1,6 @@
-package hkw.onlineLibrary.entity;
+package hkw.onlineLibrary.model;
 
-public class admin {
+public class User {
     private String phoneNumber;
     private String passwd;
 }
