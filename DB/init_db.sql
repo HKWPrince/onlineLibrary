@@ -1,13 +1,11 @@
-create schema Library;
-use Library;
-
 -- User 使用者資料表
-CREATE TABLE IF NOT EXISTS User (
-    PhoneNumber VARCHAR(10) NOT NULL UNIQUE PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS user (
+    userId INT AUTO_INCREMENT PRIMARY KEY,
+    phone_number VARCHAR(10) NOT NULL,
     Password VARCHAR(255) NOT NULL,
-    UserName VARCHAR(255) NOT NULL,
-    RegistrationTime DATETIME NOT NULL,
-    LastLoginTime DATETIME
+    user_name VARCHAR(255) NOT NULL,
+    registration_time DATETIME NOT NULL,
+    last_login_time DATETIME
 );
 
 -- Book 書籍資料表
@@ -20,23 +18,21 @@ CREATE TABLE IF NOT EXISTS Book (
 
 -- Borrowing Record 借閱紀錄資料表
 CREATE TABLE IF NOT EXISTS BorrowingRecord (
+    UserId INT NOT NULL,
     ISBN VARCHAR(20),
-    PhoneNumber VARCHAR(10) NOT NULL,
-    InventoryId INT NOT NULL,
     BorrowingTime DATETIME NOT NULL,
     ReturnTime DATETIME,
-    PRIMARY KEY (ISBN, PhoneNumber, InventoryId),
-    FOREIGN KEY(ISBN) REFERENCES Book(ISBN) on delete cascade,
-    FOREIGN KEY (PhoneNumber) REFERENCES User(PhoneNumber)
+    PRIMARY KEY (ISBN, UserId, BorrowingTime),
+    FOREIGN KEY (UserId) REFERENCES user(UserId),
+    FOREIGN KEY(ISBN) REFERENCES Book(ISBN) on delete cascade
 );
 
 CREATE TABLE IF NOT EXISTS ReternsRecord (
+    UserId INT NOT NULL,
 	ISBN VARCHAR(20),
-    PhoneNumber VARCHAR(10) NOT NULL,
-    InventoryId INT NOT NULL,
     BorrowingTime DATETIME NOT NULL,
     ReturnTime DATETIME,
-    PRIMARY KEY (ISBN, PhoneNumber, InventoryId),
-    FOREIGN KEY(ISBN) REFERENCES Book(ISBN) on delete cascade,
-    FOREIGN KEY (PhoneNumber) REFERENCES User(PhoneNumber)
+    PRIMARY KEY (ISBN, UserId, BorrowingTime),
+    FOREIGN KEY (UserId) REFERENCES user(UserId),
+    FOREIGN KEY(ISBN) REFERENCES Book(ISBN) on delete cascade
 );

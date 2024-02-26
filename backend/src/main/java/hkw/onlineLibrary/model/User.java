@@ -1,50 +1,67 @@
 package hkw.onlineLibrary.model;
 
+
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 @Entity
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userid")
+    private Integer userId;
     @Column
-    private String phoneNumber;
+    private String PhoneNumber;
     @Column
-    private String password;
+    private String Password;
     @Column
-    private String userName;
+    private String UserName;
     @Column
-    private String registrationTime;
+    private Date RegistrationTime;
     @Column
-    private String lastLoginTime;
+    private Date LastLoginTime;
 
-    public String getPhoneNumber(){
-        return phoneNumber;
+    public Integer getUserId(){
+        return userId;
     }
-    public void setPhoneNumber(String phoneNumber){
-        this.phoneNumber = phoneNumber;
+    public void setUserId(Integer userId){
+        this.userId = userId;
+    }
+    public String getPhoneNumber(){
+        return PhoneNumber;
+    }
+    public void setPhoneNumber(String PhoneNumber){
+        this.PhoneNumber = PhoneNumber;
     }
     public String getPassword(){
-        return password;
+        return Password;
     }
-    public void setPassword(String password){
-        this.password = password;
+    public void setPassword(String Password){
+        this.Password = Password;
     }
     public String getUserName(){
-        return userName;
+        return UserName;
     }
-    public void setUserName(String userName){
-        this.userName = userName;
+    public void setUserName(String UserName){
+        this.UserName = UserName;
     }
-    public String getRegistrationTime(){
-        return registrationTime;
+    @PrePersist
+    protected void onCreate() {
+        RegistrationTime = new Date();  
     }
-    public void setRegistrationTime(String registrationTime){
-        this.registrationTime = registrationTime;
+
+    @PreUpdate
+    protected void onUpdate() {
+        LastLoginTime = new Date();
     }
-    public String getLastLoginTime(){
-        return lastLoginTime;
+    public Date getRegistrationTime(){
+        return RegistrationTime;
     }
-    public void setLastLoginTime(String lastLoginTime){
-        this.lastLoginTime = lastLoginTime;
-    }
+    
 }

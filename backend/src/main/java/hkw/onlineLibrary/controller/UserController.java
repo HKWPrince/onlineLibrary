@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@RequestBody User user) {
-        userRepo.save(user);
+    public String saveUser(@RequestBody User User) {
+        userRepo.save(User);
         return "Saved...";
     }
     
