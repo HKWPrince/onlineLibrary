@@ -17,7 +17,7 @@ public class User {
     @Column(name = "userid")
     private Integer userId;
     @Column
-    private String PhoneNumber;
+    private String phoneNumber;
     @Column
     private String Password;
     @Column
@@ -34,10 +34,10 @@ public class User {
         this.userId = userId;
     }
     public String getPhoneNumber(){
-        return PhoneNumber;
+        return phoneNumber;
     }
-    public void setPhoneNumber(String PhoneNumber){
-        this.PhoneNumber = PhoneNumber;
+    public void setPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
     }
     public String getPassword(){
         return Password;

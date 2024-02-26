@@ -1,12 +1,12 @@
 package hkw.onlineLibrary.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hkw.onlineLibrary.model.User;
-import hkw.onlineLibrary.repository.UserRepo;
+import hkw.onlineLibrary.service.UserService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,22 +16,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserService userService;
 
     @GetMapping(value = "/")
     public String getPage(){
         return "Hello World";
     }
 
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return userRepo.findAll();
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        boolean loginSuccess = userService.loginUser(user.getPhoneNumber(), user.getPassword());
+        return loginSuccess ? "True" : "False";
     }
 
     @PostMapping("/save")
-    public String saveUser(@RequestBody User User) {
-        userRepo.save(User);
-        return "Saved...";
+    public String saveUser(@RequestBody User user) {
+        return userService.saveUser(user);
     }
     
     
