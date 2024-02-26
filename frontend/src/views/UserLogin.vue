@@ -17,40 +17,41 @@
 </template>
 
 <script>
-// 匯入用於傳送請求的工具，這裡假設您有一個 request.js 來處理 HTTP 請求
-import request from "@/utils/request";
-import Cookies from "js-cookie"; // 假設您使用 js-cookie 來處理 cookie
+import axios from 'axios';
 
 export default {
   data() {
     return {
       loginForm: {
-        phoneNumber: [{required: true, message: 'Please enter the phone number!', trigger: 'blur'}],
-        password: [{required: true, message: 'Please enter the password', trigger: 'blur'}]
-      },
-    };
+        phoneNumber: '',
+        password: ''
+      }
+    }
   },
   methods: {
-    login() {
-      // 使用 request 工具傳送登入請求
-      request.post('/admin/login', this.loginForm).then(response => {
-        const { data } = response;
-        if (data.code === '200') {
-          this.$notify.success("Login successful");
-          //儲存登入狀態，例如使用 cookie
-          Cookies.set('user', JSON.stringify(data.data));
-          this.$router.push('/login'); // 登入成功後重定向到主頁
+    async login() {
+      try {
+        const response = await axios.post('http://localhost:8081/login', this.loginForm, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.data === 'True') {
+          this.$router.push('/books'); // 登入成功，轉跳到 /books
         } else {
-          this.$notify.error(data.msg); // 顯示錯誤訊息
+          alert('Login failed'); // 登入失敗，顯示錯誤訊息
         }
-      }).catch(error => {
-        console.error("Login error:", error);
-        this.$notify.error("Login failed");
-      });
+      } catch (error) {
+        console.error('There was an error logging in:', error);
+        alert('Login failed');
+      }
     }
   }
 };
 </script>
+
+
 
 
 

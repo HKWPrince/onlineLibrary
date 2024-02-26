@@ -42,5 +42,20 @@ docker exec -i mysql-server mysql -u root -pmy-secret-pw --local-infile=1 mydata
 # 檢查表是否創建成功
 docker exec -i mysql-server mysql -u root -pmy-secret-pw mydatabase -e "SHOW TABLES;"
 
+echo "Starting Backend Spring Boot Application..."
+# 轉到後端項目目錄
+cd backend
+# 使用 Gradle 啟動 Spring Boot 應用
+./gradlew bootRun &
 
+# 等待後端應用啟動
+sleep 10
+
+echo "Starting Frontend Vue.js Application..."
+# 轉到前端項目目錄
+cd ../frontend
+# 安裝依賴
+npm install
+# 啟動 Vue.js 應用
+npm run serve &
 
