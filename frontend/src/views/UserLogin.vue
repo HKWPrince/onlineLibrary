@@ -39,7 +39,7 @@ export default {
           this.$notify.success("Login successful");
           //儲存登入狀態，例如使用 cookie
           Cookies.set('user', JSON.stringify(data.data));
-          this.$router.push('/'); // 登入成功後重定向到主頁
+          this.$router.push('/login'); // 登入成功後重定向到主頁
         } else {
           this.$notify.error(data.msg); // 顯示錯誤訊息
         }

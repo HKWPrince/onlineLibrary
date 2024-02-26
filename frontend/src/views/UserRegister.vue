@@ -1,13 +1,16 @@
 <template>
   <div class="register-container">
     <div class="form-container">
-      <h1 class="title">Library</h1>
+      <h1 class="title">Library Registration</h1>
       <form @submit.prevent="register" class="register-form">
         <div class="input-field">
-          <input type="email" placeholder="Email" required>
+          <input v-model="user.phoneNumber" type="text" placeholder="Phone Number" required>
         </div>
         <div class="input-field">
-          <input type="password" placeholder="Password" required>
+          <input v-model="user.password" type="password" placeholder="Password" required>
+        </div>
+        <div class="input-field">
+          <input v-model="user.userName" type="text" placeholder="Username" required>
         </div>
         <button type="submit" class="submit-btn">Sign up</button>
         <p class="signin-text">Already have an account? <a href="/login">Sign in.</a></p>
@@ -17,11 +20,34 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+  data() {
+    return {
+      user: {
+        phoneNumber: '',
+        password: '',
+        userName: ''
+      }
+    }
+  },
   methods: {
     register() {
-      // 註冊邏輯
-      alert('註冊功能尚未實現');
+      axios.post('http://localhost:8081/save', this.user, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        console.log(response.data);
+        alert('Registration successful');
+        this.$router.push('/login');
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Registration failed');
+      });
     }
   }
 };
@@ -56,7 +82,6 @@ export default {
 
 .input-field {
   margin-bottom: 1rem;
-  position: relative;
 }
 
 .input-field input {
@@ -65,14 +90,6 @@ export default {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-.input-field small {
-  position: absolute;
-  left: 10px;
-  bottom: -20px;
-  color: red;
-  font-size: 12px;
 }
 
 .submit-btn {
