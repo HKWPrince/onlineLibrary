@@ -44,22 +44,18 @@
               <thead>
                 <tr>
                   <th>ISBN</th>
-                  <th>Title</th>
+                  <th>Name</th>
                   <th>Author</th>
-                  <th>Status</th>
+                  <th>Introduction</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="book in books" :key="book.isbn">
                   <td>{{ book.isbn }}</td>
-                  <td>{{ book.title }}</td>
+                  <td>{{ book.name }}</td>
                   <td>{{ book.author }}</td>
-                  <td>
-                    <span :class="book.isAvailable ? 'badge bg-success' : 'badge bg-danger'">
-                      {{ book.isAvailable ? 'Available' : 'Unavailable' }}
-                    </span>
-                  </td>
+                  <td>{{ book.introduction }}</td>
                   <td>
                     <button class="btn btn-primary btn-sm">View</button>
                   </td>
@@ -73,87 +69,28 @@
   </div>
 </template>
 
-
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      // 您的書籍數據
-      books: [
-        // 示例數據
-        {
-          isbn: '9780132350884',
-          title: 'Clean Code',
-          author: 'Robert Martin',
-          isAvailable: false
-        },
-        // 其他書籍數據
-      ]
+      books: [] // 初始書籍數據為空
     };
+  },
+  mounted() {
+    this.fetchBooks();
+  },
+  methods: {
+    fetchBooks() {
+      axios.get('http://localhost:8081/books')
+        .then(response => {
+          this.books = response.data; // 將獲取的書籍數據賦值給books
+        })
+        .catch(error => {
+          console.error('There was an error fetching the books:', error);
+        });
+    }
   }
 };
 </script>
-<!-- 
-<style scoped>
-#app-container {
-  display: flex;
-  height: 100vh;
-}
-
-.sidebar {
-  width: 200px;
-  background: #2c3e50;
-  color: white;
-  padding: 20px;
-}
-
-.sidebar-menu {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar-menu li a {
-  color: white;
-  text-decoration: none;
-}
-
-.main-content {
-  flex-grow: 1;
-  padding: 20px;
-}
-
-.top-nav {
-  display: flex;
-  justify-content: flex-end;
-  padding-bottom: 20px;
-}
-
-.top-nav-item {
-  padding: 0 10px;
-}
-
-.book-list-section {
-  background: #ecf0f1;
-  padding: 20px;
-}
-
-.books-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.books-table th, .books-table td {
-  padding: 10px;
-  border: 1px solid #bdc3c7;
-}
-
-.status-available {
-  color: #27ae60;
-}
-
-.status-unavailable {
-  color: #c0392b;
-}
-
-/* 添加更多樣式以匹配您的設計要求 */
-</style> -->

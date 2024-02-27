@@ -30,20 +30,20 @@
   .top-bar {
     width: 100%;
     background-color: #f5f5f5;
-    /* 其他樣式 */
+  
   }
   
   .sidebar {
     width: 250px;
     background-color: #343a40;
     color: white;
-    /* 其他樣式 */
+    
   }
   
   .main-content {
     flex-grow: 1;
     overflow-y: auto;
-    /* 其他樣式 */
+    
   }
   </style>
   

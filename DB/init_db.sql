@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Book (
     ISBN VARCHAR(20) PRIMARY KEY,
     Name VARCHAR(255) NOT NULL,
     Author VARCHAR(255) NOT NULL,
-    Introduction TEXT
+    introduction TEXT
 );
 
 -- Borrowing Record 借閱紀錄資料表
