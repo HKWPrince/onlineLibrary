@@ -27,3 +27,7 @@ cd to/this/project
 
 3.
 ./start.sh
+
+```
+### Start to use
+To verify that the installation is successful, open your browser and go to http://localhost:8080/login. You should see the login page of the library management system.

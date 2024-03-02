@@ -43,8 +43,9 @@ docker exec -i mysql-server mysql -u root -pmy-secret-pw --local-infile=1 mydata
 docker exec -i mysql-server mysql -u root -pmy-secret-pw mydatabase -e "SHOW TABLES;"
 
 echo "Starting Backend Spring Boot Application..."
-# 轉到後端項目目錄
 
+
+# 轉到後端項目目錄
 cd backend
 # 使用 Gradle 啟動 Spring Boot 應用
 ./gradlew bootRun &

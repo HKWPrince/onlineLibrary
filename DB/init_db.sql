@@ -16,23 +16,22 @@ CREATE TABLE IF NOT EXISTS Book (
     introduction TEXT
 );
 
--- Borrowing Record 借閱紀錄資料表
-CREATE TABLE IF NOT EXISTS BorrowingRecord (
-    UserId INT NOT NULL,
-    ISBN VARCHAR(20),
-    BorrowingTime DATETIME NOT NULL,
-    ReturnTime DATETIME,
-    PRIMARY KEY (ISBN, UserId, BorrowingTime),
-    FOREIGN KEY (UserId) REFERENCES user(UserId),
-    FOREIGN KEY(ISBN) REFERENCES Book(ISBN) on delete cascade
+-- Inventory 庫存資料表
+CREATE TABLE IF NOT EXISTS Inventory (
+    inventoryId INT AUTO_INCREMENT PRIMARY KEY,
+    ISBN VARCHAR(20) NOT NULL,
+    storeTime DATETIME NOT NULL,
+    status ENUM('在庫', '出借中', '整理中', '遺失', '損毀', '廢棄') NOT NULL,
+    FOREIGN KEY (ISBN) REFERENCES Book(ISBN)
 );
 
-CREATE TABLE IF NOT EXISTS ReternsRecord (
-    UserId INT NOT NULL,
-	ISBN VARCHAR(20),
+-- Borrowing Record 借閱紀錄資料表
+CREATE TABLE IF NOT EXISTS BorrowingRecord (
+    userId INT NOT NULL,
+    inventoryId INT,
     BorrowingTime DATETIME NOT NULL,
-    ReturnTime DATETIME,
-    PRIMARY KEY (ISBN, UserId, BorrowingTime),
-    FOREIGN KEY (UserId) REFERENCES user(UserId),
-    FOREIGN KEY(ISBN) REFERENCES Book(ISBN) on delete cascade
+    ReturnTime DATETIME NOT NULL,
+    PRIMARY KEY (userId, InventoryId, BorrowingTime),
+    FOREIGN KEY (userId) REFERENCES user(userId),
+    FOREIGN KEY (inventoryId) REFERENCES Inventory(inventoryId)
 );
