@@ -1,3 +1,5 @@
 LOAD DATA LOCAL INFILE '/tmp/bookData.csv' INTO TABLE Book 
 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS 
 (ISBN, `Name`, `Author`, Introduction);
+
+

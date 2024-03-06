@@ -57,7 +57,7 @@
                   <td>{{ book.author }}</td>
                   <td>{{ book.introduction }}</td>
                   <td>
-                    <button class="btn btn-primary btn-sm">View</button>
+                    <button class="btn btn-primary btn-sm">Add</button>
                   </td>
                 </tr>
               </tbody>
@@ -86,6 +86,7 @@ export default {
       axios.get('http://localhost:8081/books')
         .then(response => {
           this.books = response.data; // 將獲取的書籍數據賦值給books
+          console.log(response.data[1])
         })
         .catch(error => {
           console.error('There was an error fetching the books:', error);

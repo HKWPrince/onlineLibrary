@@ -43,10 +43,10 @@ private String introduction;
         this.Author = Author;
     }
 
-    public String getItroduction(){
+    public String getintroduction(){
         return introduction;
     }
-    public void setItroduction(String introduction){
+    public void setintroduction(String introduction){
         this.introduction = introduction;
     }
 }
